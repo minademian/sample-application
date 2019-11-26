@@ -1,0 +1,73 @@
+<div>
+  <mat-toolbar color="primary">
+    <span><mat-icon>list</mat-icon>Data Viewer</span>
+  </mat-toolbar>
+
+  <mat-card color="primary"
+    >Fetched from Google Cloud Storage (GCS) bucket</mat-card
+  >
+
+  <form>
+    <mat-form-field>
+      <input
+        matInput
+        (keyup)="searchByTerm($event.target.value)"
+        type="text"
+        id="search"
+        placeholder="Search by name"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="Filter status by"
+      />
+    </mat-form-field>
+  </form>
+
+  <mat-table [dataSource]="rows" id="list" matSort color="secondary">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >ID</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row"> {{ row.id }} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Name</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.status }} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.description }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="delta">
+      <mat-header-cell *matHeaderCellDef>Delta</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.delta }} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="createdon">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Created On</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row"> {{ row.createdOn | amLocal | amDateFormat: 'YYYY-MM-DD HH:mm' }} </mat-cell>
+    </ng-container>
+    <mat-header-row
+      *matHeaderRowDef="displayedColumns; sticky: true"
+    ></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns"
+    ></mat-row>
+  </mat-table>
+  <mat-paginator
+    [pageSizeOptions]="[20]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>
